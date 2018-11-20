@@ -1,0 +1,30 @@
+---> Compile c code and get it run
+make: Nothing to be done for 'all'.
+=======================================================
+=======================================================
+++++++++++++++++++++ Begin time +++++++++++++++++ Tue Nov 20 14:12:31 MST 2018
+============= forward tomography begin ========================== 
+---> Read in standard format Tomo
+---> Tomography is initiated 
+ the dimension is 31 181 361
+ define_horizontal_profile_orig
+============================================
+ Tomography General Info Print
+Model Name:  CHECK20
+ Dimension  dep 31 lat 181 lon 361
+============================================
+ model file is /home/hongyu_ubuntu/Tomography/CHECK20/CHECK20.standard.model
+--> Construct RMS profile flag on
+--> output RMS profile()
+---> Read in standard format Tomo
+---> Tomography is initiated 
+ the dimension is 31 181 361
+ define_horizontal_profile_orig
+============================================
+ Tomography General Info Print
+Model Name:  CHECK20
+ Dimension  dep 31 lat 181 lon 361
+============================================
+ model file is /home/hongyu_ubuntu/Tomography/CHECK20/CHECK20.standard.model
+--> Read in 215649 records 
+ <---- read record file done
