@@ -1,0 +1,11 @@
+import numpy as np
+import pandas as pd
+import sys
+import matplotlib.pyplot as plt
+
+infile = '/home/hongyu_ubuntu/ForwardTomography/code_dir/PLOTDIR/tmp.data'
+df = pd.read_csv(infile)
+bb = np.arange(-2,2,0.1)
+df.hist(bins=bb)
+plt.plot()
+plt.savefig('/home/hongyu_ubuntu/ForwardTomography/code_dir/PLOTDIR/hist.pdf')
