@@ -3132,13 +3132,57 @@ int new_tomo::calculate_turning_depth(new_record* my_record)
 void new_tomo::forward_tomography_func(big_new_record* my_big_record)
 {
 	cout << "--> Begin forward tomography" << endl;
+
+	// 1. get initiate variance and variance function
+	this->get_initial_variance(my_big_record);
+
+
+
 	//this->scheme_1(my_big_record);
 
 	//this->scheme_2(my_big_record);
 	
 	this->scheme_3(my_big_record);
+	
 
+
+	this->get_end_variance(my_big_record);
+	cout << " ----> begin_variance_is "<< my_big_record->beg_variance << " end_variance_is "<< my_big_record->end_variance << endl;
 }
+
+
+void new_tomo::get_initial_variance(big_new_record* my_big_record)
+{
+
+	double beg_variance = 0;
+
+	int ista = 0;
+	for( ista = 0; ista < my_big_record->sta_num; ista ++)
+	{
+		cout << "dt obs "<< my_big_record->my_record[ista].dt_obs_prem << endl;
+		beg_variance += my_big_record->my_record[ista].dt_obs_prem * 
+			my_big_record->my_record[ista].dt_obs_prem ;
+	}
+	beg_variance = beg_variance / my_big_record->sta_num;
+
+	my_big_record->beg_variance = beg_variance;
+	cout << " begin_variance_is "<< beg_variance << endl;
+	
+}
+void new_tomo::get_end_variance(big_new_record* my_big_record)
+{
+	double beg_variance = 0;
+	int ista = 0;
+	for( ista = 0; ista < my_big_record->sta_num; ista ++)
+	{
+		beg_variance += my_big_record->my_record[ista].dt_residual_for_current_iteration *
+			my_big_record->my_record[ista].dt_residual_for_current_iteration ;
+	}
+	beg_variance = beg_variance / my_big_record->sta_num;
+
+	my_big_record->end_variance = beg_variance;
+}
+
 
 
 // this scheme calculate the PREM time for a give model
@@ -3175,12 +3219,9 @@ int new_tomo::construct_L2_weight()
 	}
 	else
 	{
-		for(i = 0; i < 22 ; i++)
-			this->L2_weight[i] = 0.3;
-		this->L2_weight[23] = 0.4;
-		this->L2_weight[24] = 0.65;
-		this->L2_weight[25] = 0.9;
-		for( i = 26; i<this->num_dep;i++)
+		for(i = 0; i < this->num_dep - 3 ; i++)
+			this->L2_weight[i] = 0.001;
+		for( i = this->num_dep - 3; i<this->num_dep;i++)
 			this->L2_weight[i] = 1.0;
 
 	}
@@ -3196,22 +3237,8 @@ int new_tomo::construct_L1_weight()
 	this->L1_weight.resize(this->num_dep);
 	int i;
 
-	if( this->update_step_flag <= 3)
-	{
-		for(i = 0; i < 24 ; i++)
-			this->L1_weight[i] = 1.0;
-		this->L1_weight[24] = 0.75;
-		this->L1_weight[25] = 0.5;
-		this->L1_weight[26] = 0.25;
-		for( i = 27; i<this->num_dep;i++)
-			this->L1_weight[i] = 0.0001;
-
-	}
-	else
-	{
 		for(i = 0; i < this->num_dep ; i++)
 			this->L1_weight[i] = 1.0;
-	}
 
 
 	//int count;
@@ -4009,8 +4036,11 @@ int new_tomo::check_if_update_with_current_record(new_record* my_record)
 	else if( this->update_step_flag == 9)
 	{
 		// Step3, use Sdiff to update L2
-		this->update_phase_num = 1;
+		this->update_phase_num = 4;
 		this->update_phase_list.push_back("Sdiff");
+		this->update_phase_list.push_back("S");
+		this->update_phase_list.push_back("P");
+		this->update_phase_list.push_back("Pdiff");
 	}
 
 	// 1. check if the phase is right

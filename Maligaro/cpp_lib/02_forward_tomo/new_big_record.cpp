@@ -1552,7 +1552,10 @@ void big_new_record::read_record_file(vector<new_record>& my_record)
 			else if( count == 18 )
 				my_record[line].SNR = atof(sub1.c_str());
 			else if( count == 19 )
+			{
 				my_record[line].dt_obs_prem  = atof(sub1.c_str());
+				//cout << " read in dt obs prem is "<< my_record[line].dt_obs_prem << endl;
+			}
 			else if( count == 20 )
 				my_record[line].PHASE = sub1;
 			else if( count == 21 )

@@ -49,9 +49,10 @@ set INPUT = $WORKDIR/LSM_record_input
 
 ## plot diffferent depth shell for tomo
 foreach STEP (1 2 3 )
-echo "csh $SRCDIR/c12.plot_different_depth_shell.sh $PLOTDIR $WORKDIR $ID $STEP" >> $script
+echo "csh $SRCDIR/c12.plot_different_depth_shell.sh $PLOTDIR $WORKDIR $ID $STEP" >> $script 
 end
 echo "csh $SRCDIR/c31.plot_dt_hist_per_update.sh $PLOTDIR $WORKDIR $ID" >> $script
+echo "csh $SRCDIR/c41.plot_variance_const_per_iteration.sh $PLOTDIR $WORKDIR $ID" >> $script
 # plot cross-section
 set event = $WORKDIR/LSM_record_input
 #echo "csh $SRCDIR/c21.plot_vertical_slice_for_all_record.sh $SRCDIR  $event $PLOTDIR $WORKDIR" >> $script

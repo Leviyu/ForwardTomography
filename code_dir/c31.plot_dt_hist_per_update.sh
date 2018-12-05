@@ -19,8 +19,7 @@ set variance_file = $WORKDIR/.variance
 cat /dev/null >! $cost_file
 cat /dev/null >! $variance_file
 
-
-	foreach iteration (1 2 3)
+	foreach iteration (1 2 3 4 5)
 	set file = $WORKDIR/timeinfo.step.${step}.iteration.${iteration}.info
 	set meta = $WORKDIR/timeinfo.step.${step}.iteration.${iteration}.meta
 
@@ -59,17 +58,19 @@ pstext -R0/1/0/1 -JX6i/2i -N  -Y-1.5i  -K -O -P << EOF >> $OUT
 0 0.5 13 0 0 LB Step: $step Iter: $iteration NUM: $current_num/$total_num Variance: $variance Cost: $cost
 EOF
 
-pshistogram $dt_list -R${XMIN}/${XMAX}/0/$YMAX -Ba${XNUM}f${XINC}:"${XLABEL}":/a${YNUM}f${YTICK}:"${YLABEL}":WSne -JX6.0i/1i -W$XINC -L0.5p -G50/50/250 -V  -Y-0.5i  -P -K -O  >> $OUT
+pshistogram $dt_list -R${XMIN}/${XMAX}/0/$YMAX -Ba${XNUM}f${XINC}:"${XLABEL}":/a${YNUM}f${YTICK}:"${YLABEL}":WSne -JX6.0i/0.6i -W$XINC -L0.5p -G50/50/250 -V  -Y-0.3i  -P -K -O  >> $OUT
 
-echo "$iteration $cost">> $cost_file
-echo "$iteration $variance " >> $variance_file
+##echo "$iteration $cost">> $cost_file
+##echo "$iteration $variance " >> $variance_file
 	end # iter
 
-set cost_max = `cat $cost_file |head -n 1 |awk '{print $2}'`
-set cost_min = `cat $cost_file |tail -n 1 |awk '{print $2}'`
+##set cost_max = `cat $cost_file |head -n 1 |awk '{print $2}'`
+##set cost_min = `cat $cost_file |tail -n 1 |awk '{print $2}'`
+##set inc = `echo "($cost_max - $cost_min) / 5"|bc -l`
+##set inc = `printf "%.0f" $inc`
 
-psxy $cost_file -JX3i/1i -R0/5/$cost_min/$cost_max -Ba1f1:"Iteration":/a10f10:"Cost":SW -O -K -Gred -Y-1.5i -Sc0.3 -N<< EOF >> $OUT
-EOF
+##psxy $cost_file -JX3i/1i -R0/5/$cost_min/$cost_max -Ba${inc}f${inc}:"Iteration":/a10f10:"Cost":SW -O -K -Gred -Y-1i -Sc0.3 -N<< EOF >> $OUT
+##EOF
 
 
 

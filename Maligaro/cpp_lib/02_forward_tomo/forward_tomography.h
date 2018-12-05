@@ -241,6 +241,9 @@ class new_tomo
 		int bottom_layer;
 		int update_layer;
 
+		void get_initial_variance(big_new_record* my_big_record);
+		void get_end_variance(big_new_record* my_big_record);
+
 
 		new_tomo();
 		~new_tomo();
@@ -423,6 +426,8 @@ class big_new_record
 		double VS_EXISTING_RECORD_NUM_THRESHOLD;
 		string S_ES_DIR;
 
+		double beg_variance;
+		double end_variance;
 
 		int working_lat;
 
