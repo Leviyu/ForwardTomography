@@ -7,19 +7,18 @@ set PWD = `pwd`
 ## Test Run with Data
 #########################################################
 
-set ID = T303
+set ID = T400
 set NUM = 300000
 set starting_model = S40RTS
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
 csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
-##sleep 5s
-exit 0
+sleep 5s
 
 
 
-set ID = T301
+set ID = T401
 set starting_model = GYPSUM_S
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -27,7 +26,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = T302
+set ID = T402
 set starting_model = SEMUCB_WM1
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE

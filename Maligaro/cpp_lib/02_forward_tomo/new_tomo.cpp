@@ -3138,13 +3138,12 @@ void new_tomo::forward_tomography_func(big_new_record* my_big_record)
 
 
 
-	//this->scheme_1(my_big_record);
+	this->scheme_1(my_big_record);
 
 	//this->scheme_2(my_big_record);
 	
-	this->scheme_3(my_big_record);
+	//this->scheme_3(my_big_record);
 	
-
 
 	this->get_end_variance(my_big_record);
 	cout << " ----> begin_variance_is "<< my_big_record->beg_variance << " end_variance_is "<< my_big_record->end_variance << endl;
@@ -3380,7 +3379,7 @@ int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		//this->smooth_dvs_model(my_big_record);
+		this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
@@ -3418,7 +3417,7 @@ int new_tomo::update_current_layer_1_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		//this->smooth_dvs_model(my_big_record);
+		this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
@@ -3464,7 +3463,7 @@ int new_tomo::update_current_layer_1_begin(big_new_record* my_big_record)
 		//this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		//this->smooth_dvs_model(my_big_record);
+		this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();

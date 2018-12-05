@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> S11
+<TASK_NAME> T402
 
 # === work environment === #
 
@@ -16,7 +16,7 @@
 <taup_path_dir>							/home/ubuntu/ForwardTomography/DATADIR/TAUP/DATADIR
 
 
-<MODEL_NAME> GYPSUM_S
+<MODEL_NAME> SEMUCB_WM1
 
 <dv_type>				vs
 
