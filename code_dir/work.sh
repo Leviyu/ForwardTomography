@@ -33,7 +33,7 @@ cat /dev/null >! $logfile
 #echo "WORKDIR is $WORKDIR"
 #csh $PWD/code_dir/c00.forward_tomography.sh $PWD $ID
 csh $PWD/code_dir/c00.forward_tomography.sh $PWD $ID >> & $logfile 
-#csh $PWD/code_dir/c00.forward_tomography.sh $PWD $ID
+##csh $PWD/code_dir/c00.forward_tomography.sh $PWD $ID
 
 
 
@@ -41,7 +41,7 @@ csh $PWD/code_dir/c00.forward_tomography.sh $PWD $ID >> & $logfile
 #csh $PWD/code_dir/c02.convert_model_into_standard_format.sh $PWD $ID >>& $logfile &
 
 # to hongyu
-to_hongyu $PLOTDIR/$ID
+##to_hongyu $PLOTDIR/$ID
 
 sleep 3s
 

@@ -178,6 +178,7 @@ class new_tomo
 		void construct_dt_path_len_weight(string flag);
 		int scheme_1(big_new_record* my_big_record);
 		int scheme_2(big_new_record* my_big_record);
+		int scheme_3(big_new_record* my_big_record);
 		int update_current_layer_1_begin(big_new_record* my_big_record);
 		int update_current_layer_2_begin(big_new_record* my_big_record);
 		int smooth_dvs_model(big_new_record* my_big_record);

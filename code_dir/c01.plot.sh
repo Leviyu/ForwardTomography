@@ -164,9 +164,10 @@ set event = $WORKDIR/LSM_record_input
 
 
 echo "--> Working on scripts"
-csh $script  > & /dev/null
+##csh $script  > & /dev/null
+csh $script  
 #csh $script  
 
-to_hongyu $PLOTDIR
-
+##to_hongyu $PLOTDIR
+##
 exit 0

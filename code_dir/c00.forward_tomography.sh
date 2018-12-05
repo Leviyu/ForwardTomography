@@ -1,4 +1,4 @@
-#!/bin/csh
+#!/bin/tcsh
 
 # ==================================================
 #	This Script is the main scrip for layer stripping method (LSM)

@@ -367,6 +367,7 @@ void new_record::read_cross_point_info(new_tomo* my_tomo)
 	// if cross point file does not exist, we produce it 
 	if(!is_file_exist(this->cross_point_file))
 	{
+		//cout << " ---- make cross point "<< endl;
 		// 1. read in taup file
 		this->read_taup_path_info(my_tomo->taup_path_dir);
 

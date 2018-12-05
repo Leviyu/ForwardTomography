@@ -3,38 +3,44 @@
 
 set PWD = `pwd`
 
-#set deg_list = (10 20 30 )
-set deg_list = (20)
+#########################################################
+## Test Run with Data
+#########################################################
 
-foreach deg (`echo $deg_list`)
+set ID = T102
+set NUM = 1000000
+set starting_model = S40RTS
+cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
+sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+csh $PWD/mother.sh ${ID} &
+echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
+sleep 1s
+exit 0
 
-####################################################3
-#sleep 5h
-#echo "--> run for checker $deg "
-# run1 use CHECK10time to run for all
-#cat $PWD/back/event.CHECK20time |head -n 30000 > $PWD/LSM_record_input
-#sed -i "/MODEL_NAME/c\<MODEL_NAME> EMPTY" $PWD/INFILE
-#csh $PWD/mother.sh CHECK20run30k
+#########################################################
+## Benchmark test
+#########################################################
 
+set ID = B25
+set NUM = 1000
+set starting_model = EMPTY
+cat $PWD/back/event.CHECK20time |head -n ${NUM} > $PWD/LSM_record_input
+sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+csh $PWD/mother.sh ${ID} &
+echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
+sleep 1s
 
+######################################
+set ID = K4
+set NUM = 20000
+set starting_model = S40RTS
+cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
+sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+csh $PWD/mother.sh ${ID} &
+echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
+sleep 1s
+exit 0
+#######################################
 
-############# For ALL ##################
-#cat $PWD/back/event.CHECK20time  > $PWD/LSM_record_input
-#sed -i "/MODEL_NAME/c\<MODEL_NAME> EMPTY" $PWD/INFILE
-#csh $PWD/mother.sh CHECK${deg}runall
-
-end  #############
-
-
-set deg = S40RTS
-############# For ALL ##################
-cat $PWD/back/eventinfo.S40RTS |head -n 20000 > $PWD/LSM_record_input
-sed -i "/MODEL_NAME/c\<MODEL_NAME> EMPTY" $PWD/INFILE
-csh $PWD/mother.sh CHECKS40RTS20k
-
-#sleep 10h
-############# For ALL ##################
-#cat $PWD/back/eventinfo.S40RTS  > $PWD/LSM_record_input
-#sed -i "/MODEL_NAME/c\<MODEL_NAME> EMPTY" $PWD/INFILE
-#csh $PWD/mother.sh CHECKS40RTSall
+exit 0
 

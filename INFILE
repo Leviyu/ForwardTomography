@@ -3,20 +3,20 @@
 
 
 
-<TASK_NAME> CHECK20run
+<TASK_NAME> P4
 
 # === work environment === #
 
-<PWD>									/home/hongyu_ubuntu/ForwardTomography
-<SRCDIR>								/home/hongyu_ubuntu/ForwardTomography/code_dir
-<WORKDIR>								/DATA1/ForwardTomography/WORKDIR
-<PLOTDIR>								/home/hongyu_ubuntu/ForwardTomography/PLOTDIR
-<MODEL_DIR>								/home/hongyu_ubuntu/Tomography
-<cross_point_dir>						/DATA1/ForwardTomography/CROSS_POINT_DIR
-<taup_path_dir>							/DATA1/ForwardTomography/TAUP_PATH_DIR/DATADIR
+<PWD>									/home/ubuntu/ForwardTomography
+<SRCDIR>								/home/ubuntu/ForwardTomography/code_dir
+<WORKDIR>								/home/ubuntu/ForwardTomography/DATADIR
+<PLOTDIR>								/home/ubuntu/ForwardTomography/PLOTDIR
+<MODEL_DIR>								/home/ubuntu/ForwardTomography/Tomography
+<cross_point_dir>						/home/ubuntu/ForwardTomography/DATADIR/CROSS
+<taup_path_dir>							/home/ubuntu/ForwardTomography/DATADIR/TAUP/DATADIR
 
 
-<MODEL_NAME> CHECK20
+<MODEL_NAME> GYPSUM_P
 
 <dv_type>				vs
 
@@ -25,7 +25,7 @@
 ##<Iteration_Scheme>	S_4_3_2
 ##<Iteration_Scheme>	S_3_2
 ##<Iteration_Scheme>	S_2
-<Iteration_M>	1
+<Iteration_M>	5
 
 
 

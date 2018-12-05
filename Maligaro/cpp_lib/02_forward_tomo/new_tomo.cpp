@@ -3132,9 +3132,11 @@ int new_tomo::calculate_turning_depth(new_record* my_record)
 void new_tomo::forward_tomography_func(big_new_record* my_big_record)
 {
 	cout << "--> Begin forward tomography" << endl;
-	this->scheme_1(my_big_record);
+	//this->scheme_1(my_big_record);
 
 	//this->scheme_2(my_big_record);
+	
+	this->scheme_3(my_big_record);
 
 }
 
@@ -3185,7 +3187,7 @@ int new_tomo::construct_L2_weight()
 
 	return 1;
 }
-// L2 weight is the vertical weight profile that focus on lower mantle > 2200km
+// L1 weight is the vertical weight profile that focus on lower mantle > 2200km
 // with smoothing transition at 2200km
 int new_tomo::construct_L1_weight()
 {
@@ -3295,9 +3297,27 @@ int new_tomo::scheme_1(big_new_record* my_big_record)
 	this->output_tomography_info3("final.3");
 	this->output_delta_tomography(this->tomo2,"delta.3");
 	}
-
 	return 0;
 }
+
+int new_tomo::scheme_3(big_new_record* my_big_record)
+{
+	this->store_smoother(my_big_record);
+
+	// construct L2 weight
+	int horizontal_flag = 1;
+
+
+	// Step3, use Sdiff to update L2
+	this->update_step_flag = 9;
+	this->update_current_layer_2_begin(my_big_record);
+	if( horizontal_flag == 1) {
+	this->output_tomography_info3("final.3");
+	this->output_delta_tomography(this->tomo2,"delta.3");
+	}
+	return 0;
+}
+
 int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 {
 	string flag;
@@ -3458,8 +3478,6 @@ int new_tomo::smooth_dvs_model(big_new_record* my_big_record)
 int new_tomo::smooth_dvs_model_for_each_cell(big_new_record* my_big_record,
 		int idep2,int ilat2,int ilon2)
 {
-
-
 	// choose which Gaussian radisu to use
 	int index= this->current_index;
 	double sig = this->current_sig;
@@ -3497,8 +3515,8 @@ int new_tomo::smooth_dvs_model_for_each_cell(big_new_record* my_big_record,
 			if( fabs(ilon - ilon2) >= ilon_max )
 				continue;
 			ddvs = this->my_cell[idep2][ilat_nei][ilon].delta_dvs;
-			if( fabs(ddvs) < 0.01 )
-				continue;
+			//if( fabs(ddvs) < 0.01 )
+				//continue;
 			distance = dist_A_B(this->lat[ilat2], this->lon[ilon2] , this->lat[ilat_nei], this->lon[ilon]);
 			weight = gaussian_func(1, 0, sig,0,distance);
 			//cout << " distance is "<< distance << " weight  "<<weight <<  endl;
@@ -3566,6 +3584,8 @@ int new_tomo::store_smoother(big_new_record* my_big_record)
 	// 	1000				1828					2
 	// 	1500				2742					3
 
+	double smoother_scale_factor = 0.5;
+
 	// the storage structure is 
 	// smoother[CMB_dist_index][lat_center][lat_neighbour]
 	int ilat_center, ilat_nei;
@@ -3582,13 +3602,13 @@ int new_tomo::store_smoother(big_new_record* my_big_record)
 	for(index = 0; index < index_max; index++)
 	{
 		if(index == 0 )
-			RRR = 457;
+			RRR = 457 * smoother_scale_factor;
 		else if(index == 1)
-			RRR = 914;
+			RRR = 914 * smoother_scale_factor;
 		else if(index == 2)
-			RRR = 1828;
-		else if(index == 1)
-			RRR = 2742;
+			RRR = 1828 * smoother_scale_factor;
+		else if(index == 3)
+			RRR = 2742 * smoother_scale_factor;
 		for(ilat_center = 0; ilat_center < this->num_lat; ilat_center++)
 			for(ilat_nei = 0; ilat_nei < this->num_lat; ilat_nei++)
 			{
