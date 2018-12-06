@@ -4035,11 +4035,8 @@ int new_tomo::check_if_update_with_current_record(new_record* my_record)
 	else if( this->update_step_flag == 9)
 	{
 		// Step3, use Sdiff to update L2
-		this->update_phase_num = 4;
+		this->update_phase_num = 1;
 		this->update_phase_list.push_back("Sdiff");
-		this->update_phase_list.push_back("S");
-		this->update_phase_list.push_back("P");
-		this->update_phase_list.push_back("Pdiff");
 	}
 
 	// 1. check if the phase is right
