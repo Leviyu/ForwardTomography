@@ -3218,16 +3218,19 @@ int new_tomo::construct_L2_weight()
 	}
 	else
 	{
-		for(i = 0; i < this->num_dep - 3 ; i++)
-			this->L2_weight[i] = 0.001;
-		for( i = this->num_dep - 3; i<this->num_dep;i++)
+		for(i = 0; i < 22 ; i++)
+			this->L2_weight[i] = 0.3;
+		this->L2_weight[23] = 0.4;
+		this->L2_weight[24] = 0.65;
+		this->L2_weight[25] = 0.9;
+		for( i = 26; i<this->num_dep;i++)
 			this->L2_weight[i] = 1.0;
 
 	}
 
 	return 1;
 }
-// L1 weight is the vertical weight profile that focus on lower mantle > 2200km
+// L2 weight is the vertical weight profile that focus on lower mantle > 2200km
 // with smoothing transition at 2200km
 int new_tomo::construct_L1_weight()
 {
@@ -3236,8 +3239,22 @@ int new_tomo::construct_L1_weight()
 	this->L1_weight.resize(this->num_dep);
 	int i;
 
+	if( this->update_step_flag <= 3)
+	{
+		for(i = 0; i < 24 ; i++)
+			this->L1_weight[i] = 1.0;
+		this->L1_weight[24] = 0.75;
+		this->L1_weight[25] = 0.5;
+		this->L1_weight[26] = 0.25;
+		for( i = 27; i<this->num_dep;i++)
+			this->L1_weight[i] = 0.0001;
+
+	}
+	else
+	{
 		for(i = 0; i < this->num_dep ; i++)
 			this->L1_weight[i] = 1.0;
+	}
 
 
 	//int count;
@@ -3247,6 +3264,7 @@ int new_tomo::construct_L1_weight()
 	return 0;
 
 }
+
 
 int new_tomo::free_CP_memory_for_records(big_new_record* my_big_record)
 {
