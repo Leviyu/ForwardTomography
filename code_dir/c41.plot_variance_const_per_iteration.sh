@@ -7,27 +7,34 @@ set ID = $3
 set OUT = $WORKDIR/COST.ps
 set OUT_pdf = $PLOTDIR/COST.pdf
 
+set iteration_max = `cat $WORKDIR/INFILE|grep -w Iteration_M |awk '{print $2}'`
+
+
 pstext -Y10.5i -JX6i/1i -R0/1/0/1 -K -N -P << EOF >! $OUT
 0 0 15 0 0 LB Cost and Variance Reduction
 EOF
 
 
-foreach step (1 2 3 4 5 6 7 8 9)
-set file2 = $WORKDIR/timeinfo.step.${step}.iteration.1.info
+set start_variance = `cat $WORKDIR/timeinfo.step.9.iteration.1.meta|awk 'NR==1 {print $10}'`
+
+
+foreach step ( 1 2 3 4 5 6 7 8 9)
+
+	set file2 = $WORKDIR/timeinfo.step.${step}.iteration.1.info
 if(! -e $file2 ) then
 continue
 endif
-	echo "--> worling on step $step"
+	echo "--> working on step $step"
 
 set cost_file = $WORKDIR/.cost
 set variance_file = $WORKDIR/.variance
+cat /dev/null >! $cost_file
 cat /dev/null >! $variance_file
 
-set file3 = $WORKDIR/timeinfo.step.${step}.iteration.1.info
-set variance_tmp = `cat $file3 |awk 'NR==1 {print $10}'`
-echo "0 $variance_tmp " >> $variance_file
-
-	foreach iteration (1 2 3 4 5)
+echo "0 $start_variance" >> $variance_file
+set iteration = 1
+while( $iteration <= $iteration_max)
+##foreach iteration (1 2 3 )
 	set file = $WORKDIR/timeinfo.step.${step}.iteration.${iteration}.info
 	set meta = $WORKDIR/timeinfo.step.${step}.iteration.${iteration}.meta
 
@@ -65,17 +72,29 @@ set cost = `cat $meta |awk '{print $14}'`
 
 ##pshistogram $dt_list -R${XMIN}/${XMAX}/0/$YMAX -Ba${XNUM}f${XINC}:"${XLABEL}":/a${YNUM}f${YTICK}:"${YLABEL}":WSne -JX6.0i/0.6i -W$XINC -L0.5p -G50/50/250 -V  -Y-0.3i  -P -K -O  >> $OUT
 
+echo "$iteration $cost">> $cost_file
 echo "$iteration $variance " >> $variance_file
+@ iteration ++
 	end # iter
 
+cat $variance_file
 	
-set cost_max = `cat $cost_file |head -n 1 |awk '{print $2}'`
-set cost_min = `cat $cost_file |tail -n 1 |awk '{print $2}'`
-echo " cost min max $cost_min $cost_max"
+set cost_max = `cat $variance_file |head -n 1 |awk '{print $2}'`
+set cost_min = `cat $variance_file |tail -n 1 |awk '{print $2}'`
+set cost_min = `printf "%.0f" $cost_min`
+set cost_max = `printf "%.0f" $cost_max`
+if($cost_min > $cost_max) then
+set tmp = $cost_min
+set cost_min = $cost_max
+set cost_max = $tmp
+endif
+
+
+##echo " cost min max $cost_min $cost_max"
 set inc = `echo "($cost_max - $cost_min) / 3"|bc -l`
 set inc = `printf "%.0f" $inc`
 
-psxy $cost_file -JX3i/0.5i -R0/5/$cost_min/$cost_max -Ba1f1:"Step ${step} Iteration":/a${inc}f{$inc}:"Cost":SW -O -K -Gred -Y-1.3i -Sc0.3 -N<< EOF >> $OUT
+psxy $variance_file -JX3i/0.5i -R-1/5/$cost_min/$cost_max -Ba1f1:"Step ${step} Iteration":/a${inc}f{$inc}:"Cost":SW -O -K -Gred -Y-1.3i -Sc0.3 -N<< EOF >> $OUT
 EOF
 
 end # layer

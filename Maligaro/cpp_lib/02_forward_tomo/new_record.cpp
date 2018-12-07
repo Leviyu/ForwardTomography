@@ -363,6 +363,7 @@ void new_record::read_cross_point_info(new_tomo* my_tomo)
 
 	// initiate CP info
 	//this->initiate_CP();
+	int line_num;
 	
 	// if cross point file does not exist, we produce it 
 	if(!is_file_exist(this->cross_point_file))
@@ -374,11 +375,20 @@ void new_record::read_cross_point_info(new_tomo* my_tomo)
 		// 2. find cross-point
 		this->find_cross_points(my_tomo);
 	}
+	if( is_file_exist(this->cross_point_file)) 
+	{
+		line_num = count_file_num(this->cross_point_file);
+		if( line_num < 10 )
+		{
+			this->read_taup_path_info(my_tomo->taup_path_dir);
+			this->find_cross_points(my_tomo);
+		}
+	}
 
 	// read in cross point file
 	ifstream myfile;
 	myfile.open(this->cross_point_file.c_str());
-	int line_num = count_file_num(this->cross_point_file);
+	line_num = count_file_num(this->cross_point_file);
 	//cout << " initiate cp "<< endl;
 	this->initiate_CP(line_num);
 

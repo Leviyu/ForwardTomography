@@ -3367,7 +3367,7 @@ int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		//this->smooth_dvs_model(my_big_record);
+		this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
@@ -3598,7 +3598,7 @@ int new_tomo::store_smoother(big_new_record* my_big_record)
 	// 	1000				1828					2
 	// 	1500				2742					3
 
-	double smoother_scale_factor = 0.15;
+	double smoother_scale_factor = 0.3;
 
 	// the storage structure is 
 	// smoother[CMB_dist_index][lat_center][lat_neighbour]
@@ -3836,7 +3836,7 @@ int new_tomo::update_tomo_for_current_iteration_add_delta_dvs()
 					continue;
 
 				double orig = this->my_cell[idep][ilat][ilon].dvs;
-				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs + 
+				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs - 
 					this->my_cell[idep][ilat][ilon].delta_dvs;
 				if( this->my_cell[idep][ilat][ilon].dvs != this->my_cell[idep][ilat][ilon].dvs 
 						|| isinf( this->my_cell[idep][ilat][ilon].dvs))
@@ -4304,7 +4304,8 @@ int new_tomo::distribute_dt_residual_and_convert_to_dvs(new_record* my_record)
 
 
 		// the dvs is calculated using the following equation
-		dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
+		//dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
+		dvs_new_tomo = dl / ( (V_PREM * (1 + dvs_old_tomo / 100) ) * (dl / V_PREM  + dt_for_cell) ) - 1;
 		dvs_new_tomo = dvs_new_tomo * 100 - dvs_old_tomo;
 //cout << "old dvs " << dvs_old_tomo << " new dvs "<< dvs_new_tomo << endl;
 ////cout << dl << " "<< V_PREM << " "<< dt_for_cell << " "<<  weight_tmp[count]<< endl;
