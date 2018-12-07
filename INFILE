@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> J107
+<TASK_NAME> J132
 
 # === work environment === #
 
@@ -16,7 +16,7 @@
 <taup_path_dir>							/home/ubuntu/ForwardTomography/DATADIR/TAUP/DATADIR
 
 
-<MODEL_NAME> S40RTS
+<MODEL_NAME> GYPSUM_S
 
 <dv_type> vs
 
@@ -25,7 +25,7 @@
 ##<Iteration_Scheme>	S_4_3_2
 ##<Iteration_Scheme>	S_3_2
 ##<Iteration_Scheme>	S_2
-<Iteration_M> 5
+<Iteration_M> 3
 
 
 
