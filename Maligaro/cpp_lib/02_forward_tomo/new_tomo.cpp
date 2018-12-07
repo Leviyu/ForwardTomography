@@ -3866,7 +3866,7 @@ int new_tomo::update_tomo_for_current_iteration_add_delta_dvs()
 					continue;
 
 				double orig = this->my_cell[idep][ilat][ilon].dvs;
-				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs + 
+				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs -
 					this->my_cell[idep][ilat][ilon].delta_dvs;
 				if( this->my_cell[idep][ilat][ilon].dvs != this->my_cell[idep][ilat][ilon].dvs 
 						|| isinf( this->my_cell[idep][ilat][ilon].dvs))
@@ -4129,7 +4129,7 @@ int new_tomo::forward_tomo_for_one_station(new_record* my_record)
 	my_record->calculate_tomo_correction(this);
 
 	// calculate travel time residual after tomography correction
-	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem + my_record->dt_tomo_correction;
+	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem - my_record->dt_tomo_correction;
 
 	//cout << " dt orig" << my_record->dt_obs_prem  << " residual "<< my_record->dt_residual_for_current_iteration<< endl;
 

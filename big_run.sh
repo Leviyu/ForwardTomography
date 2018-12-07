@@ -2,19 +2,9 @@
 
 
 set PWD = `pwd`
-# ==========================================================
-set ID = J2
-set NUM = 50000
-set starting_model = S40RTS
-cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
-sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
-csh $PWD/mother.sh ${ID} &
-echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
-sleep 1s
-exit 0
 
 # ==========================================================
-set ID = T403
+set ID = U2
 set NUM = 300000
 set starting_model = S40RTS
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
@@ -23,7 +13,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = T404
+set ID = U3
 set starting_model = GYPSUM_S
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -31,7 +21,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = T405
+set ID = U4
 set starting_model = SEMUCB_WM1
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -42,6 +32,16 @@ exit 0
 # ================================================================
 
 
+# ==========================================================
+set ID = U1
+set NUM = 50000
+set starting_model = S40RTS
+cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
+sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+csh $PWD/mother.sh ${ID} &
+echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
+sleep 1s
+exit 0
 
 #########################################################
 ## Test Run with Data
