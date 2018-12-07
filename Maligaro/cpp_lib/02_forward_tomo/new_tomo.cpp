@@ -3138,11 +3138,11 @@ void new_tomo::forward_tomography_func(big_new_record* my_big_record)
 
 
 
-	this->scheme_1(my_big_record);
+	//this->scheme_1(my_big_record);
 
 	//this->scheme_2(my_big_record);
 	
-	//this->scheme_3(my_big_record);
+	this->scheme_3(my_big_record);
 	
 
 	this->get_end_variance(my_big_record);
@@ -3211,22 +3211,11 @@ int new_tomo::construct_L2_weight()
 	this->L2_weight.resize(this->num_dep);
 
 
-	if(this->update_step_flag <=3 )
-	{
-		for(i = 0; i < this->num_dep ; i++)
-			this->L2_weight[i] = 1.0;
-	}
-	else
-	{
-		for(i = 0; i < 22 ; i++)
-			this->L2_weight[i] = 0.3;
-		this->L2_weight[23] = 0.4;
-		this->L2_weight[24] = 0.65;
-		this->L2_weight[25] = 0.9;
-		for( i = 26; i<this->num_dep;i++)
+		for(i = 0; i < this->num_dep -3 ; i++)
+			this->L2_weight[i] = 0.0001;
+		for( i = this->num_dep -3; i<this->num_dep;i++)
 			this->L2_weight[i] = 1.0;
 
-	}
 
 	return 1;
 }
@@ -3239,27 +3228,8 @@ int new_tomo::construct_L1_weight()
 	this->L1_weight.resize(this->num_dep);
 	int i;
 
-	if( this->update_step_flag <= 3)
-	{
-		for(i = 0; i < 24 ; i++)
-			this->L1_weight[i] = 1.0;
-		this->L1_weight[24] = 0.75;
-		this->L1_weight[25] = 0.5;
-		this->L1_weight[26] = 0.25;
-		for( i = 27; i<this->num_dep;i++)
-			this->L1_weight[i] = 0.0001;
-
-	}
-	else
-	{
 		for(i = 0; i < this->num_dep ; i++)
 			this->L1_weight[i] = 1.0;
-	}
-
-
-	//int count;
-	//for(count = 0; count < this->num_dep ; count ++)
-		//cout << " weight "<< this->L1_weight[count] << endl;
 
 	return 0;
 
@@ -3397,7 +3367,7 @@ int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		this->smooth_dvs_model(my_big_record);
+		//this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
@@ -3628,7 +3598,7 @@ int new_tomo::store_smoother(big_new_record* my_big_record)
 	// 	1000				1828					2
 	// 	1500				2742					3
 
-	double smoother_scale_factor = 0.3;
+	double smoother_scale_factor = 0.15;
 
 	// the storage structure is 
 	// smoother[CMB_dist_index][lat_center][lat_neighbour]
@@ -4053,8 +4023,11 @@ int new_tomo::check_if_update_with_current_record(new_record* my_record)
 	else if( this->update_step_flag == 9)
 	{
 		// Step3, use Sdiff to update L2
-		this->update_phase_num = 1;
+		this->update_phase_num = 4;
 		this->update_phase_list.push_back("Sdiff");
+		this->update_phase_list.push_back("S");
+		this->update_phase_list.push_back("Pdiff");
+		this->update_phase_list.push_back("P");
 	}
 
 	// 1. check if the phase is right
@@ -4129,7 +4102,7 @@ int new_tomo::forward_tomo_for_one_station(new_record* my_record)
 	my_record->calculate_tomo_correction(this);
 
 	// calculate travel time residual after tomography correction
-	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem + my_record->dt_tomo_correction;
+	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem - my_record->dt_tomo_correction;
 
 	//cout << " dt orig" << my_record->dt_obs_prem  << " residual "<< my_record->dt_residual_for_current_iteration<< endl;
 

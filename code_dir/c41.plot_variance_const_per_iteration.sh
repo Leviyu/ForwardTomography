@@ -13,12 +13,19 @@ EOF
 
 
 foreach step (1 2 3 4 5 6 7 8 9)
+set file2 = $WORKDIR/timeinfo.step.${step}.iteration.1.info
+if(! -e $file2 ) then
+continue
+endif
 	echo "--> worling on step $step"
 
 set cost_file = $WORKDIR/.cost
 set variance_file = $WORKDIR/.variance
-cat /dev/null >! $cost_file
 cat /dev/null >! $variance_file
+
+set file3 = $WORKDIR/timeinfo.step.${step}.iteration.1.info
+set variance_tmp = `cat $file3 |awk 'NR==1 {print $10}'`
+echo "0 $variance_tmp " >> $variance_file
 
 	foreach iteration (1 2 3 4 5)
 	set file = $WORKDIR/timeinfo.step.${step}.iteration.${iteration}.info
@@ -58,11 +65,9 @@ set cost = `cat $meta |awk '{print $14}'`
 
 ##pshistogram $dt_list -R${XMIN}/${XMAX}/0/$YMAX -Ba${XNUM}f${XINC}:"${XLABEL}":/a${YNUM}f${YTICK}:"${YLABEL}":WSne -JX6.0i/0.6i -W$XINC -L0.5p -G50/50/250 -V  -Y-0.3i  -P -K -O  >> $OUT
 
-echo "$iteration $cost">> $cost_file
 echo "$iteration $variance " >> $variance_file
 	end # iter
 
-cat $cost_file
 	
 set cost_max = `cat $cost_file |head -n 1 |awk '{print $2}'`
 set cost_min = `cat $cost_file |tail -n 1 |awk '{print $2}'`

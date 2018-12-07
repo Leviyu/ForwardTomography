@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> J2
+<TASK_NAME> J32
 
 # === work environment === #
 
@@ -18,19 +18,19 @@
 
 <MODEL_NAME> S40RTS
 
-<dv_type>				vs
+<dv_type> vs
 
 <Iteration_Scheme>	S_1
 ##<Iteration_Scheme>	S_1_3_2
 ##<Iteration_Scheme>	S_4_3_2
 ##<Iteration_Scheme>	S_3_2
 ##<Iteration_Scheme>	S_2
-<Iteration_M>	5
+<Iteration_M> 5
 
 
 
 <Iteration_N>	5
-<Iteration_MN>	5
+<I????teration_MN>	5
 
 
 # === LSM input parameter  === #
