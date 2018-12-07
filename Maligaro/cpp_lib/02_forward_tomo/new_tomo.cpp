@@ -4129,7 +4129,7 @@ int new_tomo::forward_tomo_for_one_station(new_record* my_record)
 	my_record->calculate_tomo_correction(this);
 
 	// calculate travel time residual after tomography correction
-	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem - my_record->dt_tomo_correction;
+	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem + my_record->dt_tomo_correction;
 
 	//cout << " dt orig" << my_record->dt_obs_prem  << " residual "<< my_record->dt_residual_for_current_iteration<< endl;
 

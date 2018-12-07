@@ -45,7 +45,7 @@ int main()
 
 
 	// output starting model
-	//my_tomo.output_tomography_info3("start");
+	my_tomo.output_tomography_info3("start");
 	my_tomo.forward_tomography_func(&my_big_record);
 	//my_tomo.output_tomography_info3("final.3");
 	//my_tomo.output_delta_tomography(&my_tomo2,"delta.3");

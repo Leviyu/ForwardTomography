@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> B40
+<TASK_NAME> J2
 
 # === work environment === #
 
@@ -16,7 +16,7 @@
 <taup_path_dir>							/home/ubuntu/ForwardTomography/DATADIR/TAUP/DATADIR
 
 
-<MODEL_NAME> EMPTY
+<MODEL_NAME> S40RTS
 
 <dv_type>				vs
 
