@@ -3,10 +3,10 @@
 
 set PWD = `pwd`
 # ==========================================================
-set ID = U00
-set NUM = 10000
+set ID = K12
+set NUM = 1
 set starting_model = S40RTS
-cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
+cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
 csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
