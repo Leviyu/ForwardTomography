@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> K12
+<TASK_NAME> K31
 
 # === work environment === #
 
@@ -25,12 +25,12 @@
 ##<Iteration_Scheme>	S_4_3_2
 ##<Iteration_Scheme>	S_3_2
 ##<Iteration_Scheme>	S_2
-<Iteration_M>	1
+<Iteration_M> 3
 
 
 
 <Iteration_N>	5
-<Iteration_MN>	5
+##<It??eration_MN>	5
 
 
 # === LSM input parameter  === #

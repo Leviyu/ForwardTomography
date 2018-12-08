@@ -3,11 +3,14 @@
 
 set PWD = `pwd`
 # ==========================================================
-set ID = K12
-set NUM = 1
+set ID = K31
+set NUM = 100
+set iteration = 3
 set starting_model = S40RTS
-cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
+##cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
+cat $PWD/back/eventinfo.data |grep -w S|awk '$3>95 {print $0}' |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+sed -i "/Iteration_M/c\<Iteration_M> ${iteration}" $PWD/INFILE
 csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 1s
