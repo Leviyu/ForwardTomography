@@ -6,12 +6,12 @@ set PWD = `pwd`
 ## Test S Wave
 #########################################################
 
-set ID = K15
-set NUM = 100
+set ID = M8
+set NUM = 1000
 set iteration = 3
 set starting_model = GYPSUM_S
 ##cat $PWD/back/eventinfo.S_Sdiff |head -n ${NUM}  > $PWD/LSM_record_input
-cat $PWD/back/eventinfo.S40RTS |grep -w Sdiff |head -n ${NUM}  > $PWD/LSM_record_input
+cat $PWD/back/eventinfo.S40RTS |grep -w Sdiff|awk '$3>120 {print $0}' |head -n ${NUM}  > $PWD/LSM_record_input
 ##cat $PWD/back/eventinfo.S40RTS |grep -w S|awk '$3>90 {print $0}' |head -n ${NUM}  > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
 sed -i "/Iteration_M/c\<Iteration_M> ${iteration}" $PWD/INFILE

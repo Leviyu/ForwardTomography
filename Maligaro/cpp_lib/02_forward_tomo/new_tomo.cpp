@@ -3212,7 +3212,7 @@ int new_tomo::construct_L2_weight()
 
 
 		for(i = 0; i < this->num_dep -3 ; i++)
-			this->L2_weight[i] = 0.3;
+			this->L2_weight[i] = 0.00001;
 		for( i = this->num_dep -3; i<this->num_dep;i++)
 			this->L2_weight[i] = 1.0;
 
@@ -3529,8 +3529,8 @@ int new_tomo::smooth_dvs_model_for_each_cell(big_new_record* my_big_record,
 			if( fabs(ilon - ilon2) >= ilon_max )
 				continue;
 			ddvs = this->my_cell[idep2][ilat_nei][ilon].delta_dvs;
-			if( fabs(ddvs) < 0.001 )
-				continue;
+			//if( fabs(ddvs) < 0.001 )
+				//continue;
 			distance = dist_A_B(this->lat[ilat2], this->lon[ilon2] , this->lat[ilat_nei], this->lon[ilon]);
 			weight = gaussian_func(1, 0, sig,0,distance);
 			//cout << " distance is "<< distance << " weight  "<<weight <<  endl;
@@ -4225,12 +4225,13 @@ int new_tomo::distribute_dt_residual_and_convert_to_dvs(new_record* my_record)
 		//weight_pair = this->get_pair_weight(idep,my_record);
 		//cout << " pair weight is "<< weight_pair << endl;
 
-		weight_comp[count] = weight_path_len[count]
-			* weight_RMS[count] 
-			* weight_dt_path_len[count]
-			* weight_L2_weight[count]
-			* weight_L1_weight[count]
-			* weight_pair;
+		weight_comp[count] = 1* 
+			weight_path_len[count]
+			//* weight_RMS[count] 
+			//* weight_dt_path_len[count]
+			* weight_L2_weight[count];
+			//* weight_L1_weight[count]
+			//* weight_pair;
 	///*
 		if( weight_comp[count] != weight_comp[count] || 
 				weight_comp[count] == 0)
@@ -4308,9 +4309,10 @@ int new_tomo::distribute_dt_residual_and_convert_to_dvs(new_record* my_record)
 
 		// the dvs is calculated using the following equation
 		//dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
-		dvs_new_tomo = dl / ( (V_PREM * (1 + dvs_old_tomo / 100) ) * (dl / V_PREM  + dt_for_cell) ) - 1;
+		//dvs_new_tomo = dl / ( (V_PREM * (1 + dvs_old_tomo / 100) ) * (dl / V_PREM  + dt_for_cell) ) - 1;
+		dvs_new_tomo = dl / ( V_PREM * ( dl / ( V_PREM * ( 1 + dvs_old_tomo / 100) ) + dt_for_cell ) ) -1;
 		dvs_new_tomo = dvs_new_tomo * 100 - dvs_old_tomo;
-//if( fabs(dt_for_cell) > 0.01 )
+//if( fabs(dt_for_cell) > 0.001 )
 //{
 //cout << dl << " "<< V_PREM << " "<< dt_for_cell << " " << endl;
 //cout << "old dvs " << dvs_old_tomo << " new dvs "<< dvs_new_tomo << endl;
