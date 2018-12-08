@@ -94,7 +94,7 @@ endif
 set inc = `echo "($cost_max - $cost_min) / 3"|bc -l`
 set inc = `printf "%.0f" $inc`
 
-psxy $variance_file -JX3i/0.5i -R-1/5/$cost_min/$cost_max -Ba1f1:"Step ${step} Iteration":/a${inc}f{$inc}:"Cost":SW -O -K -Gred -Y-1.3i -Sc0.3 -N<< EOF >> $OUT
+psxy $variance_file -JX3i/0.5i -R-1/10/$cost_min/$cost_max -Ba1f1:"Step ${step} Iteration":/a${inc}f{$inc}:"Cost":SW -O -K -Gred -Y-1.3i -Sc0.3 -N<< EOF >> $OUT
 EOF
 
 end # layer

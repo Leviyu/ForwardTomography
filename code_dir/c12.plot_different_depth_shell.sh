@@ -63,7 +63,7 @@ makecpt  -Cpolar -I -T$CPT_MIN/$CPT_MAX/$CPT_DELTA -Z >! $CPT
 ##set CPT_residual = $WORKDIR/tomo_residual.cpt
 ##makecpt  -Cpolar -I -T-1/1/0.2 -Z >! $CPT_residual
 ##set E_option = -E210/20
-set E_option = -E500
+set E_option = -E300
 
 psxy -JX -R -O -K -N  << EOF >> $OUT
 EOF

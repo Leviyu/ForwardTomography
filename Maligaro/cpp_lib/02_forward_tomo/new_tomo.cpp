@@ -3158,7 +3158,7 @@ void new_tomo::get_initial_variance(big_new_record* my_big_record)
 	int ista = 0;
 	for( ista = 0; ista < my_big_record->sta_num; ista ++)
 	{
-		cout << "dt obs "<< my_big_record->my_record[ista].dt_obs_prem << endl;
+		//cout << "dt obs "<< my_big_record->my_record[ista].dt_obs_prem << endl;
 		beg_variance += my_big_record->my_record[ista].dt_obs_prem * 
 			my_big_record->my_record[ista].dt_obs_prem ;
 	}
@@ -3367,7 +3367,7 @@ int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		this->smooth_dvs_model(my_big_record);
+		//this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
@@ -3786,7 +3786,7 @@ void new_tomo::update_tomo_for_current_iteration()
 			for(ilon = 0; ilon < this->num_lon; ilon++)
 			{
 
-				if( this->my_cell[idep][ilat][ilon].sum_num_in_cell <= 1 )
+				if( this->my_cell[idep][ilat][ilon].sum_num_in_cell == 0 )
 					continue;
 
 				//if( this->my_cell[idep][ilat][ilon].sum_num_in_cell != this->my_cell[idep][ilat][ilon].sum_num_in_cell)
@@ -3836,7 +3836,7 @@ int new_tomo::update_tomo_for_current_iteration_add_delta_dvs()
 					continue;
 
 				double orig = this->my_cell[idep][ilat][ilon].dvs;
-				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs - 
+				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs -
 					this->my_cell[idep][ilat][ilon].delta_dvs;
 				if( this->my_cell[idep][ilat][ilon].dvs != this->my_cell[idep][ilat][ilon].dvs 
 						|| isinf( this->my_cell[idep][ilat][ilon].dvs))
@@ -4104,7 +4104,9 @@ int new_tomo::forward_tomo_for_one_station(new_record* my_record)
 	// calculate travel time residual after tomography correction
 	my_record->dt_residual_for_current_iteration = my_record->dt_obs_prem - my_record->dt_tomo_correction;
 
-	//cout << " dt orig" << my_record->dt_obs_prem  << " residual "<< my_record->dt_residual_for_current_iteration<< endl;
+	//cout << " dt orig" << my_record->dt_obs_prem  
+		//<< " corr "<<  my_record->dt_tomo_correction
+		//<< " residual "<< my_record->dt_residual_for_current_iteration<< endl;
 
 	//return 1;
 	// distribute dt residual to the whole depending on weight
@@ -4303,12 +4305,16 @@ int new_tomo::distribute_dt_residual_and_convert_to_dvs(new_record* my_record)
 		dvs_old_tomo = this->my_cell[idep][ilat][ilon].dvs;
 
 
+
 		// the dvs is calculated using the following equation
 		//dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
 		dvs_new_tomo = dl / ( (V_PREM * (1 + dvs_old_tomo / 100) ) * (dl / V_PREM  + dt_for_cell) ) - 1;
 		dvs_new_tomo = dvs_new_tomo * 100 - dvs_old_tomo;
+//if( fabs(dt_for_cell) > 0.01 )
+//{
+//cout << dl << " "<< V_PREM << " "<< dt_for_cell << " " << endl;
 //cout << "old dvs " << dvs_old_tomo << " new dvs "<< dvs_new_tomo << endl;
-////cout << dl << " "<< V_PREM << " "<< dt_for_cell << " "<<  weight_tmp[count]<< endl;
+//}
 
 		if(dvs_new_tomo != dvs_new_tomo)
 		{
@@ -4455,13 +4461,20 @@ cout << " dl "<< dl
 				<< endl;
 		this->my_cell[idep][ilat][ilon].sum_num_in_cell += 1;
 		this->my_cell[idep][ilat][ilon].sum_num_in_cell_weight += w_comprehensive * w_phase;
+
+
 		if( this->my_cell[idep][ilat][ilon].sum_num_in_cell_weight == 0)
 			cout << " ERROR2 weight "<< w_comprehensive 
 				<< " average dvs "<< average_dvs_current_cell
 				<< " comp "<< w_comprehensive
 				<< " wphase "<< w_phase
 				<< endl;
-
+//cout << " sum_dvs_in_cell "<< this->my_cell[idep][ilat][ilon].sum_dvs_in_cell
+	//<< " w_comprehensive "<< w_comprehensive
+	//<<  " wphase "<< w_phase 
+	//<< " average_dvs_current_cell "<< average_dvs_current_cell 
+	//<< " sum weight "<< this->my_cell[idep][ilat][ilon].sum_num_in_cell_weight
+	//<< endl;
 
 		this->my_cell[idep][ilat][ilon].dt_path_len = ave_dt_path_len;
 		
