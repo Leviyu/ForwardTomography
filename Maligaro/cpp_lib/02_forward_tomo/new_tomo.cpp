@@ -3866,7 +3866,7 @@ int new_tomo::update_tomo_for_current_iteration_add_delta_dvs()
 					continue;
 
 				double orig = this->my_cell[idep][ilat][ilon].dvs;
-				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs -
+				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs +
 					this->my_cell[idep][ilat][ilon].delta_dvs;
 				if( this->my_cell[idep][ilat][ilon].dvs != this->my_cell[idep][ilat][ilon].dvs 
 						|| isinf( this->my_cell[idep][ilat][ilon].dvs))
@@ -4331,8 +4331,10 @@ int new_tomo::distribute_dt_residual_and_convert_to_dvs(new_record* my_record)
 
 
 		// the dvs is calculated using the following equation
-		dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
+		dvs_new_tomo = dl / ( V_PREM * ( dl / ( V_PREM * ( 1 + dvs_old_tomo / 100) ) + dt_for_cell ) ) -1;
 		dvs_new_tomo = dvs_new_tomo * 100 - dvs_old_tomo;
+		//dvs_new_tomo = dl / ( dl / (1+dvs_old_tomo /100 ) + V_PREM * dt_for_cell ) -1 ;
+		//dvs_new_tomo = dvs_new_tomo * 100 - dvs_old_tomo;
 //cout << "old dvs " << dvs_old_tomo << " new dvs "<< dvs_new_tomo << endl;
 ////cout << dl << " "<< V_PREM << " "<< dt_for_cell << " "<<  weight_tmp[count]<< endl;
 
