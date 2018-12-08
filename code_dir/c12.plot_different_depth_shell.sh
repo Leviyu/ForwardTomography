@@ -23,7 +23,7 @@ echo "--> Plotting for Step $STEP"
 
 
 ##set DEPTH_RANGE = (500 1000  2000  2800)
-set DEPTH_RANGE = ( 2800  )
+set DEPTH_RANGE = ( 500 1000 2000 2800  )
 #set DEPTH_RANGE = (300 500 1100 1500 1900 2200 2500 2800)
 
 set INFILE = $WORKDIR/INFILE
@@ -63,7 +63,7 @@ makecpt  -Cpolar -I -T$CPT_MIN/$CPT_MAX/$CPT_DELTA -Z >! $CPT
 ##set CPT_residual = $WORKDIR/tomo_residual.cpt
 ##makecpt  -Cpolar -I -T-1/1/0.2 -Z >! $CPT_residual
 ##set E_option = -E210/20
-set E_option = -E500
+set E_option = -E300
 
 psxy -JX -R -O -K -N  << EOF >> $OUT
 EOF
@@ -130,4 +130,4 @@ EOF
 
 ps2pdf $OUT $OUT_pdf
 rm $OUT
-to_hongyu $OUT_pdf
+##to_hongyu $OUT_pdf

@@ -2,22 +2,9 @@
 
 
 set PWD = `pwd`
-# ==========================================================
-set ID = K31
-set NUM = 100
-set iteration = 3
-set starting_model = S40RTS
-##cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
-cat $PWD/back/eventinfo.data |grep -w S|awk '$3>95 {print $0}' |head -n ${NUM} > $PWD/LSM_record_input
-sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
-sed -i "/Iteration_M/c\<Iteration_M> ${iteration}" $PWD/INFILE
-csh $PWD/mother.sh ${ID} &
-echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
-sleep 1s
-exit 0
 
 # ==========================================================
-set ID = U2
+set ID = H3
 set NUM = 300000
 set starting_model = S40RTS
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
@@ -26,7 +13,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = U3
+set ID = H4
 set starting_model = GYPSUM_S
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -34,7 +21,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = U4
+set ID = H5
 set starting_model = SEMUCB_WM1
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -44,6 +31,19 @@ sleep 5s
 exit 0
 # ================================================================
 
+# ==========================================================
+set ID = H2
+set NUM = 20000
+set iteration = 3
+set starting_model = S40RTS
+##cat $PWD/back/eventinfo.data |grep -w Sdiff |head -n ${NUM} > $PWD/LSM_record_input
+cat $PWD/back/eventinfo.data | head -n ${NUM} > $PWD/LSM_record_input
+sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
+sed -i "/Iteration_M/c\<Iteration_M> ${iteration}" $PWD/INFILE
+csh $PWD/mother.sh ${ID} &
+echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
+sleep 1s
+exit 0
 
 
 #########################################################
