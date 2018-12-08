@@ -6,8 +6,8 @@ set PWD = `pwd`
 ## Test S Wave
 #########################################################
 
-set ID = K11
-set NUM = 1
+set ID = K14
+set NUM = 100
 set iteration = 3
 set starting_model = GYPSUM_S
 ##cat $PWD/back/eventinfo.S_Sdiff |head -n ${NUM}  > $PWD/LSM_record_input

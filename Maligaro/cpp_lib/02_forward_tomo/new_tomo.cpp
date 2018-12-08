@@ -3529,8 +3529,8 @@ int new_tomo::smooth_dvs_model_for_each_cell(big_new_record* my_big_record,
 			if( fabs(ilon - ilon2) >= ilon_max )
 				continue;
 			ddvs = this->my_cell[idep2][ilat_nei][ilon].delta_dvs;
-			//if( fabs(ddvs) < 0.01 )
-				//continue;
+			if( fabs(ddvs) < 0.001 )
+				continue;
 			distance = dist_A_B(this->lat[ilat2], this->lon[ilon2] , this->lat[ilat_nei], this->lon[ilon]);
 			weight = gaussian_func(1, 0, sig,0,distance);
 			//cout << " distance is "<< distance << " weight  "<<weight <<  endl;
@@ -3836,7 +3836,7 @@ int new_tomo::update_tomo_for_current_iteration_add_delta_dvs()
 					continue;
 
 				double orig = this->my_cell[idep][ilat][ilon].dvs;
-				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs -
+				this->my_cell[idep][ilat][ilon].dvs = this->my_cell[idep][ilat][ilon].dvs +
 					this->my_cell[idep][ilat][ilon].delta_dvs;
 				if( this->my_cell[idep][ilat][ilon].dvs != this->my_cell[idep][ilat][ilon].dvs 
 						|| isinf( this->my_cell[idep][ilat][ilon].dvs))
