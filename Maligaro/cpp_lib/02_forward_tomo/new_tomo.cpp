@@ -3212,7 +3212,7 @@ int new_tomo::construct_L2_weight()
 
 
 		for(i = 0; i < this->num_dep -3 ; i++)
-			this->L2_weight[i] = 0.0001;
+			this->L2_weight[i] = 0.3;
 		for( i = this->num_dep -3; i<this->num_dep;i++)
 			this->L2_weight[i] = 1.0;
 
