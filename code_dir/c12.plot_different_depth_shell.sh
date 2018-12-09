@@ -22,12 +22,13 @@ set STEP = $4
 echo "--> Plotting for Step $STEP"
 
 
-##set DEPTH_RANGE = (500 1000  2000  2800)
-set DEPTH_RANGE = ( 2800  )
+set DEPTH_RANGE = (500 1000  2000  2800)
+##set DEPTH_RANGE = ( 2800  )
 #set DEPTH_RANGE = (300 500 1100 1500 1900 2200 2500 2800)
 
 set INFILE = $WORKDIR/INFILE
 set MODEL = `grep -w MODEL_NAME $INFILE |awk 'NR==1 {print $2}'`
+set dv_type = `grep -w dv_type $INFILE |awk 'NR==1 {print $2}'`
 
 
 set OUT = $PLOTDIR/STEP_${STEP}_04_different_depth_shell_${MODEL}.ps
@@ -56,6 +57,9 @@ EOF
 
 set grid_space = 1
 set CPT_MAX = 2.5
+if( $dv_type == "vp") then
+set CPT_MAX = 1.5
+endif
 set CPT_MIN = `echo "$CPT_MAX * -1"|bc -l`
 set CPT_DELTA = `echo "$CPT_MAX /5"|bc -l`
 set CPT = $WORKDIR/tomo.cpt

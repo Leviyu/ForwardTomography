@@ -3598,7 +3598,7 @@ int new_tomo::store_smoother(big_new_record* my_big_record)
 	// 	1000				1828					2
 	// 	1500				2742					3
 
-	double smoother_scale_factor = 0.3;
+	double smoother_scale_factor = 1.0;
 
 	// the storage structure is 
 	// smoother[CMB_dist_index][lat_center][lat_neighbour]
