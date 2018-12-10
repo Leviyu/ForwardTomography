@@ -3,7 +3,7 @@
 
 
 
-<TASK_NAME> H5
+<TASK_NAME> H15
 
 # === work environment === #
 
@@ -25,7 +25,7 @@
 ##<Iteration_Scheme>	S_4_3_2
 ##<Iteration_Scheme>	S_3_2
 ##<Iteration_Scheme>	S_2
-<Iteration_M> 3
+<Iteration_M> 8
 
 
 

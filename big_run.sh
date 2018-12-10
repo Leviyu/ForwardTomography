@@ -4,7 +4,7 @@
 set PWD = `pwd`
 
 # ==========================================================
-set ID = H3
+set ID = H13
 set NUM = 300000
 set starting_model = S40RTS
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
@@ -13,7 +13,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = H4
+set ID = H14
 set starting_model = GYPSUM_S
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
@@ -21,7 +21,7 @@ csh $PWD/mother.sh ${ID} &
 echo "--------------> Working on ID $ID RecordNUM: $NUM starting model: $starting_model"
 sleep 5s
 
-set ID = H5
+set ID = H15
 set starting_model = SEMUCB_WM1
 cat $PWD/back/eventinfo.data |head -n ${NUM} > $PWD/LSM_record_input
 sed -i "/MODEL_NAME/c\<MODEL_NAME> ${starting_model}" $PWD/INFILE
