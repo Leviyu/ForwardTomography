@@ -3367,7 +3367,7 @@ int new_tomo::update_current_layer_2_begin(big_new_record* my_big_record)
 		this->update_tomo_for_current_iteration();
 
 		// 4. Smooth delta dvs model
-		//this->smooth_dvs_model(my_big_record);
+		this->smooth_dvs_model(my_big_record);
 
 		// 5. add delta dvs to new dvs
 		this->update_tomo_for_current_iteration_add_delta_dvs();
