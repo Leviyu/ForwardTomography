@@ -6,7 +6,7 @@ set PWD = `pwd`
 ## Test P Wave
 #########################################################
 
-set ID = H30
+set ID = H82
 set NUM = 15000
 set iteration = 3
 set starting_model = GYPSUM_P
@@ -22,7 +22,7 @@ sleep 5s
 ## Test S Wave
 #########################################################
 
-set ID = H31
+set ID = H83
 set NUM = 150000
 set iteration = 3
 set starting_model = GYPSUM_S
